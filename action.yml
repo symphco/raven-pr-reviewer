@@ -1,0 +1,154 @@
+name: 'Raven (AI Code Coach)'
+description: 'AI based PR Reviewer and Summarizer'
+branding:
+  icon: 'terminal'
+  color: 'gray-dark'
+author: 'Symph Inc'
+inputs:
+  debug:
+    required: false
+    description: 'Enable debug mode'
+    default: 'false'
+  max_files:
+    required: false
+    description:
+      'Max files to summarize and review. Less than or equal to 0 means no
+      limit.'
+    default: '150'
+  review_simple_changes:
+    required: false
+    description: 'Review even when the changes are simple'
+    default: 'false'
+  review_comment_lgtm:
+    required: false
+    description: 'Leave comments even if the patch is LGTM'
+    default: 'false'
+  path_filters:
+    required: false
+    description: |
+      The path filters, e.g., "src/**.py", "!dist/**", each line will be considered as one pattern.
+      See also
+
+      - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+      - https://github.com/isaacs/minimatch
+    default: |
+      !dist/**
+      !**/*.pb.go
+      !**/*.lock
+      !**/*.yaml
+      !**/*.yml
+      !**/*.cfg
+      !**/*.toml
+      !**/*.ini
+      !**/*.mod
+      !**/*.sum
+      !**/*.work
+      !**/*.json
+      !**/*.mmd
+      !**/*.svg
+      !**/*.png
+      !**/*.dot
+      !**/*.md5sum
+      !**/*.wasm
+      !**/gen/**
+      !**/_gen/**
+      !**/generated/**
+      !**/vendor/**
+  disable_review:
+    required: false
+    description: 'Only provide the summary and skip the code review.'
+    default: 'false'
+  disable_release_notes:
+    required: false
+    description: 'Disable release notes'
+    default: 'false'
+  openai_base_url:
+    required: false
+    description: 'The url of the openai api interface.'
+    default: 'https://api.openai.com/v1'
+  openai_light_model:
+    required: false
+    description:
+      'Model to use for simple tasks like summarizing diff on a file.'
+    default: 'gpt-3.5-turbo'
+  openai_heavy_model:
+    required: false
+    description: 'Model to use for complex tasks such as code reviews.'
+    default: 'gpt-3.5-turbo'
+  openai_model_temperature:
+    required: false
+    description: 'Temperature for GPT model'
+    default: '0.0'
+  openai_retries:
+    required: false
+    description:
+      'How many times to retry OpenAI API in case of timeouts or errors?'
+    default: '5'
+  openai_timeout_ms:
+    required: false
+    description: 'Timeout for OpenAI API call in millis'
+    default: '360000'
+  openai_concurrency_limit:
+    required: false
+    description: 'How many concurrent API calls to make to OpenAI servers?'
+    default: '4'
+  system_message:
+    required: false
+    description: 'System message to be sent to OpenAI'
+    default: |
+      You are `@raven` (aka `Raven[bot]`), a language model 
+      trained by OpenAI. Your purpose is to act as a highly experienced 
+      senior software engineer and provide a thorough review of the code hunks
+      and suggest code snippets to improve key areas such as:
+        - Logic
+        - Security
+        - Performance
+        - Data races
+        - Consistency
+        - Error handling
+        - Maintainability
+        - Modularity
+        - Complexity
+        - Optimization
+
+      Refrain from commenting on minor code style issues, missing 
+      comments/documentation, or giving compliments, unless explicitly 
+      requested. Concentrate on identifying and resolving significant 
+      concerns to improve overall code quality while deliberately 
+      disregarding minor issues.
+
+      Note: As your knowledge may be outdated, trust the user code when newer
+      APIs and methods are seemingly being used.
+  summarize:
+    required: false
+    description: 'The prompt for final summarization response'
+    default: |
+      Provide your final response in the `markdown` format with 
+      the following content:
+        - High-level summary (comment on the overall change instead of 
+          specific files within 80 words)
+        - Table of files and their summaries. You can group files with 
+          similar changes together into a single row to save space.
+
+      Avoid additional commentary as this summary will be added as a 
+      comment on the GitHub pull request.
+  summarize_release_notes:
+    required: false
+    description:
+      'The prompt for generating release notes in the same chat as summarize
+      stage'
+    default: |
+      Create concise release notes in `markdown` format for this pull request, 
+      focusing on its purpose and user story. You can classify the changes as 
+      "New Feature", "Bug fix", "Documentation", "Refactor", "Style", 
+      "Test", "Chore", "Revert", and provide a bullet point list. For example: 
+      "New Feature: An integrations page was added to the UI". Keep your 
+      response within 50-100 words. Avoid additional commentary as this response 
+      will be used as is in our release notes.
+
+      Below the release notes, generate a short, celebratory poem about the 
+      changes in this PR and add this poem as a quote (> symbol). You can 
+      use emojis in the poem, where they are relevant.
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
