@@ -7,34 +7,34 @@ import {octokit} from './octokit'
 const context = github_context
 const repo = context.repo
 
-export const COMMENT_GREETING = ':robot: OpenAI'
+export const COMMENT_GREETING = ':robot: Raven'
 
 export const COMMENT_TAG =
-  '<!-- This is an auto-generated comment by OpenAI -->'
+  '<!-- This is an auto-generated comment by Raven -->'
 
 export const COMMENT_REPLY_TAG =
-  '<!-- This is an auto-generated reply by OpenAI -->'
+  '<!-- This is an auto-generated reply by Raven -->'
 
 export const SUMMARIZE_TAG =
-  '<!-- This is an auto-generated comment: summarize by openai -->'
+  '<!-- This is an auto-generated comment: summarize by Raven -->'
 
 export const DESCRIPTION_START_TAG = `
-<!-- This is an auto-generated comment: release notes by openai -->`
+<!-- This is an auto-generated comment: release notes by Raven -->`
 export const DESCRIPTION_END_TAG =
-  '<!-- end of auto-generated comment: release notes by openai -->'
+  '<!-- end of auto-generated comment: release notes by Raven -->'
 
-export const RAW_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: raw summary by openai -->
+export const RAW_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: raw summary by Raven -->
 <!--
 `
 export const RAW_SUMMARY_END_TAG = `-->
-<!-- end of auto-generated comment: raw summary by openai -->`
+<!-- end of auto-generated comment: raw summary by Raven -->`
 
-export const SHORT_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: short summary by openai -->
+export const SHORT_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: short summary by Raven -->
 <!--
 `
 
 export const SHORT_SUMMARY_END_TAG = `-->
-<!-- end of auto-generated comment: short summary by openai -->`
+<!-- end of auto-generated comment: short summary by Raven -->`
 
 export const COMMIT_ID_START_TAG = '<!-- commit_ids_reviewed_start -->'
 export const COMMIT_ID_END_TAG = '<!-- commit_ids_reviewed_end -->'
