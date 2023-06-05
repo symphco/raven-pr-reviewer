@@ -1,8 +1,8 @@
-name: 'AI based PR Reviewer & Summarizer'
+name: 'Raven (AI)'
 description: 'AI based PR Reviewer and Summarizer'
 branding:
-  icon: 'aperture'
-  color: 'orange'
+  icon: 'terminal'
+  color: 'gray-dark'
 author: 'Symph Inc'
 inputs:
   debug:
